@@ -20,13 +20,18 @@ export default new Router({
                     meta: { title: '用户' }
                 },
                 {
-                    path: '/shopinfo',
+                    path: '/shop-info',
                     component: resolve => require(['../components/page/ShopInfo.vue'], resolve),
                     meta: { title: '商品详情' }
                 },
                 {
-                    path: '/shoplist',
+                    path: '/shop-list',
                     component: resolve => require(['../components/page/ShopList.vue'], resolve),
+                    meta: { title: '商品分类' }
+                },
+                {
+                    path: '/banner',
+                    component: resolve => require(['../components/page/Banner.vue'], resolve),
                     meta: { title: '商品分类' }
                 }
             ]

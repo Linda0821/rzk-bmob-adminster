@@ -19,20 +19,20 @@
                 <el-input style="width:200px;" placeholder="请输入内容"></el-input>
                 <el-button v-on:click="handleEdit()" style="margin:20px;" type="primary" icon="el-icon-plus">添加用户</el-button>
             </div>
-            <el-table :data="tableData" border style="width: 100%">
-                <el-table-column fixed prop="nickname" label="昵称" width="120"></el-table-column>
+            <el-table :data="tableData"  v-loading="loading" border style="width: 100%">
+                <el-table-column fixed prop="username" label="昵称" width="120"></el-table-column>
                 <el-table-column prop="objectId" label="objectId" width="120"></el-table-column>
                 <el-table-column prop="password" label="密码" width="80"></el-table-column>
                 <el-table-column label="手机号码" width="120">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.phoneVerFied">{{scope.row.phone}} </span>
-                        <span v-else>{{scope.row.phoneVerFied}} </span>
+                        <span>{{scope.row.mobilePhoneNumber}} </span><br>
+                        <span>是否验证：{{scope.row.mobilePhoneNumberVerified}} </span>
                     </template>
                 </el-table-column>
                 <el-table-column label="邮箱" width="120">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.emailVerfied == true">{{scope.row.email}} </span>
-                        <span v-else>{{scope.row.emailVerfied}} </span>
+                        <span>{{scope.row.email}} </span><br>
+                        <span>是否验证：{{scope.row.emailVerified}} </span>
                     </template>
                 </el-table-column>
                 <el-table-column label="地址" width="200">
@@ -72,21 +72,23 @@
                         "id":2
                     }
                 ],
-                value:''
+                value:'',
+                loading: true
             }
         },
         components:{
         },
         created() {
-            this.getData();
+            this.loading = true
+            setTimeout(this.getData, 1000)
         },
         methods: {
             getData() {
                 // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
-                Bmob.Query("users").find().then(res => {
+                Bmob.Query("_User").find().then(res => {
                     console.info(res)
                     this.tableData = res
-                    console.info(this.tableData[0].phoneVerFied)
+                    this.loading = false
                 })
             },
             handleEdit(index, row) {

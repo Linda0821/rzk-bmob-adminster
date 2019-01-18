@@ -37,13 +37,18 @@
                     },
                     {
                         icon: 'el-icon-goods',
-                        index: 'shoplist',
+                        index: 'shop-list',
                         title: '商品分类'
                     },
                     {
                         icon: 'el-icon-tickets',
-                        index: 'shopinfo',
+                        index: 'shop-info',
                         title: '商品详情'
+                    },
+                    {
+                        icon: 'el-icon-tickets',
+                        index: 'banner',
+                        title: '图片列表'
                     }
                 ]
             }

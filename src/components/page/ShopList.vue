@@ -7,7 +7,7 @@
         </div>
         <div class="container">
             <div class="select-box">
-                <el-select v-model="value" filterable placeholder="请选择" @change=" getData()">
+                <el-select v-model="value" filterable placeholder="请选择" @change="changeCategory()">
                     <el-option
                         v-for="item in options"
                         :key="item.id"
@@ -18,7 +18,7 @@
                 <el-button v-on:click="handleEdit()" style="margin:20px;" type="primary" icon="el-icon-plus">添加商品</el-button>
                 <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             </div>
-            <el-table :data="tableData" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+            <el-table :data="tableData" v-loading="loading"  border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column prop="objectId" label="objectId" width="100">
                 </el-table-column>
@@ -143,11 +143,13 @@
                 },
                 options: [],
                 value: '',
-                idx: -1
+                idx: -1,
+                loading: true
             }
         },
         created() {
-            this.getData();
+            this.loading = true
+            setTimeout(this.getData, 1000)
             //var u = 'http://bmob-cdn-22276.b0.upaiyun.com/2018/11/23/a5d642b640d647ce80380596d02d40e4.png';
             //获取商品分类
             Bmob.Query("cates").find().then(res => {
@@ -161,7 +163,12 @@
             // 分页导航
             handleCurrentChange(val) {
                 this.cur_page = val;
-                this.getData();
+                this.loading = true
+                setTimeout(this.getData, 1000)
+            },
+            changeCategory(){
+                this.loading = true
+                setTimeout(this.getData, 1000)
             },
             // 获取table数据
             getData() {
@@ -174,6 +181,7 @@
                 query.find().then(res => {
                     //console.info(res)
                     this.tableData = res
+                    this.loading = false
                 });
             },
             //点击编辑按钮
